@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet author="ThanhLoyal" id="1593562788">
+    <createTable
+            tableName="user"
+            remarks="System users">
+      <column name="id" autoIncrement="true" type="int">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="username" type="varchar(50)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="User_Username_Unique"/>
+      </column>
+      <column name="password" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email" type="varchar(100)"/>
+      <column name="phone" type="varchar(20)"/>
+      <column name="given_name" type="varchar(100)"/>
+      <column name="surname" type="varchar(100)"/>
+      <column name="locale" type="varchar(10)"/>
+      <column name="time_zone" type="varchar(30)"/>
+      <column name="enabled" type="bit" defaultValueBoolean="true"/>
+      <column name="created_by" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_date" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="ThanhLoyal" id="1594008125">
+    <addForeignKeyConstraint
+            baseColumnNames="created_by"
+            baseTableName="user"
+            constraintName="fk_user_createdBy"
+            referencedColumnNames="id"
+            referencedTableName="user"
+            validate="true"/>
+  </changeSet>
+
+  <changeSet author="ThanhLoyal" id="1594008278">
+    <addForeignKeyConstraint
+            baseColumnNames="last_modified_by"
+            baseTableName="user"
+            constraintName="fk_user_lastModifiedBy"
+            referencedColumnNames="id"
+            referencedTableName="user"
+            validate="true"/>
+  </changeSet>
+
+  <changeSet author="ThanhLoyal" id="1594124520">
+    <createTable
+            tableName="user_group"
+            remarks="Users groups">
+      <column name="id" autoIncrement="true" type="int">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uidx_UserGroup_Name"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+      <column name="created_by" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_date" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="ThanhLoyal" id="1594116842">
+    <addForeignKeyConstraint
+            baseColumnNames="created_by"
+            baseTableName="user_group"
+            constraintName="fk_userGroup_createdBy"
+            referencedColumnNames="id"
+            referencedTableName="user"
+            validate="true"/>
+  </changeSet>
+  <changeSet author="ThanhLoyal" id="1594116850">
+    <addForeignKeyConstraint
+            baseColumnNames="last_modified_by"
+            baseTableName="user_group"
+            constraintName="fk_userGroup_lastModifiedBy"
+            referencedColumnNames="id"
+            referencedTableName="user"
+            validate="true"/>
+  </changeSet>
+
+  <changeSet author="ThanhLoyal" id="1594176418">
+    <createTable
+            tableName="menu"
+            remarks="Menu of application">
+      <column name="id" autoIncrement="true" type="int">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="code" type="varchar(100)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uidx_Menu_Code"/>
+      </column>
+      <column name="level" type="smallint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="order" type="smallint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="parent_code" type="varchar(100)"/>
+      <column name="description" type="varchar(255)"/>
+      <column name="created_by" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_date" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="ThanhLoyal" id="1594170670">
+    <addForeignKeyConstraint
+            baseColumnNames="created_by"
+            baseTableName="menu"
+            constraintName="fk_menu_createdBy"
+            referencedColumnNames="id"
+            referencedTableName="user"
+            validate="true"/>
+  </changeSet>
+  <changeSet author="ThanhLoyal" id="1594170689">
+    <addForeignKeyConstraint
+            baseColumnNames="last_modified_by"
+            baseTableName="menu"
+            constraintName="fk_menu_lastModifiedBy"
+            referencedColumnNames="id"
+            referencedTableName="user"
+            validate="true"/>
+  </changeSet>
+
+  <changeSet author="ThanhLoyal" id="1594204154">
+    <createTable
+            tableName="user_group_menu_map"
+            remarks="Many to many relation between user groups and menus">
+      <column name="group_id" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="menu_id" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="ThanhLoyal" id="1594204409">
+    <addUniqueConstraint
+            columnNames="group_id, menu_id"
+            constraintName="uidx_Group_Menu"
+            tableName="user_group_menu_map"
+            validate="true"/>
+  </changeSet>
+
+  <changeSet author="ThanhLoyal" id="1594394416">
+    <createTable
+            tableName="login_session"
+            remarks="Sessions that user login to system">
+      <column name="id" autoIncrement="true" type="int">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="user_id" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="access_token_id" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="refresh_token_id" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="ip_address" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="user_agent" type="varchar(255)" />
+      <column name="created_date" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

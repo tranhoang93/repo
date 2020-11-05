@@ -1,0 +1,11 @@
+.header-buttons {
+    padding: 12px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+
+.header-buttons .shrink {
+    flex-shrink: 1;
+}

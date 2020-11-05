@@ -1,0 +1,11 @@
+.badge-tag{
+    min-width: 20px;
+    height: 20px;
+    padding: 2px 8px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 10px;
+}

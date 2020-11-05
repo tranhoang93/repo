@@ -1,0 +1,10 @@
+.loading {
+    display: block;
+    margin: 0 auto;
+    padding: 24px 0;
+    text-align: center;
+}
+
+.loading-text {
+    padding-top: 16px;
+}
